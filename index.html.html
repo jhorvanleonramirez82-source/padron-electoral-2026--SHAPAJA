@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta Padrón - Telecentro Shapaja</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .results-scroll::-webkit-scrollbar { width: 6px; }
+        .results-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen p-4">
+
+    <script>
+        const PADRON_DATA = [
+            {"item": 1, "nombre": "CARTAGENA TANCHIVA JUDITH HERCILIA", "localidad": "CASERIO 8 DE JULIO", "distrito": "UCHIZA"},
+{"item": 2, "nombre": "FLORENCIO MALLQUI NOIMI", "localidad": "CASERIO 8 DE JULIO", "distrito": "UCHIZA"},
+{"item": 3, "nombre": "ISLA TELLO CAROLINA", "localidad": "CASERIO 8 DE JULIO", "distrito": "UCHIZA"},
+{"item": 4, "nombre": "MUENA AHUANARI MERLITA LUZ", "localidad": "CASERIO 8 DE JULIO", "distrito": "UCHIZA"},
+{"item": 5, "nombre": "ORTIZ PEREZ MARY ESTHER", "localidad": "CASERIO 8 DE JULIO", "distrito": "UCHIZA"},
+{"item": 6, "nombre": "SILVA GAMARRA BETSI", "localidad": "CASERIO 8 DE JULIO", "distrito": "UCHIZA"},
+{"item": 7, "nombre": "AMASIFUEN FASABI PEREGRINA", "localidad": "CASERIO DE GUANTANAMO", "distrito": "UCHIZA"},
+{"item": 8, "nombre": "ARRIBASPLATA MALAVER MARGARITA ELENA", "localidad": "CASERIO DE GUANTANAMO", "distrito": "UCHIZA"},
+{"item": 9, "nombre": "CHICANA ALCANTARA MONICA", "localidad": "CASERIO DE GUANTANAMO", "distrito": "UCHIZA"},
+{"item": 10, "nombre": "MALAVER SILVA VICTORIA", "localidad": "CASERIO DE GUANTANAMO", "distrito": "UCHIZA"},
+{"item": 11, "nombre": "MENDOZA BURGA JAQUELI", "localidad": "CASERIO DE GUANTANAMO", "distrito": "UCHIZA"},
+{"item": 12, "nombre": "SAMANIGO CHIJAP EDA JULIA", "localidad": "CASERIO DE GUANTANAMO", "distrito": "UCHIZA"},
+{"item": 13, "nombre": "VALDIVIA MENDOZA MEDALY", "localidad": "CASERIO DE GUANTANAMO", "distrito": "UCHIZA"},
+{"item": 14, "nombre": "VELA VERAMENDY DANY DEISY", "localidad": "CASERIO DE GUANTANAMO", "distrito": "UCHIZA"},
+{"item": 15, "nombre": "VELASQUEZ RODRIGUEZ WILDER", "localidad": "CASERIO DE GUANTANAMO", "distrito": "UCHIZA"},
+{"item": 16, "nombre": "AGUIRRE PINEDO EVELIA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 17, "nombre": "BUENDIA SANDOVAL ENES", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 18, "nombre": "CASTRO CAMILOAGA EUGENIO HILARIO", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 19, "nombre": "CONDEZO CONCHA LUS IRENE", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 20, "nombre": "CONDEZO CORREA DEYSI", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 21, "nombre": "CORREA ZUELPERES GRAVIELA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 22, "nombre": "CURINAMBE LOZADA MATILDE", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 23, "nombre": "DOMINGUEZ ALVA MARICELY JANETH", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 24, "nombre": "GUEVARA PIZARRO FIORELLA VIRGINIA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 25, "nombre": "HUAMANI DIAZ VICTOR MANUEL", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 26, "nombre": "JARA PRESENTACION EULADIA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 27, "nombre": "JARA SOBRADOS JEMINA KERIN", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 28, "nombre": "LIHO AGUIRRE BELSI AZUCENA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 29, "nombre": "LOPEZ HIDALGO VILMA ROSA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 30, "nombre": "LOPEZ JOAQUIN YECELINDA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 31, "nombre": "MONTALVO AYALA AQUILINA ROSA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 32, "nombre": "MORENO AQUINO NANCY", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 33, "nombre": "NUÑEZ VASQUEZ MAGDA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 34, "nombre": "OSCATE RETIS LOURDES", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 35, "nombre": "PARDAVE JAVIER NORMA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 36, "nombre": "PAREDES PIZANGO JUNIOR", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 37, "nombre": "QUINTEROS FERNANDEZ DOMINGA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 38, "nombre": "RAMIREZ SANDOVAL JENY ELIZABETH", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 39, "nombre": "SALCEDO BUENDIA ANA CECILIA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 40, "nombre": "SILVA RAMIREZ ELI", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 41, "nombre": "SOLANO SERVAN VERONICA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 42, "nombre": "TAFUR SOLANO NELI MARVELI", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 43, "nombre": "TAFUR SOLANO ROSA MARLENI", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 44, "nombre": "TEJADA SALAS OBASANA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 45, "nombre": "TEJADA UTIA YSABEL", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 46, "nombre": "TRUJILLO CORREA NANCY", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 47, "nombre": "VENTURA MONTALVO BILLY JOEL", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 48, "nombre": "VERA CURINAMBE NEYDA LUCY", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 49, "nombre": "GODOY SOLORZANO FLORES", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 50, "nombre": "DIAZ GUEVARA CELIDA", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 51, "nombre": "OLIVARES LOPEZ ELMER", "localidad": "LOBOYACU", "distrito": "UCHIZA"},
+{"item": 52, "nombre": "AGUILAR CASTERNOQUE BEBSI", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 53, "nombre": "AGUILAR CUBAS MARIA ALBINA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 54, "nombre": "ALANYA HUANCACURI CARLOS", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 55, "nombre": "ALVAREZ MORENA ESTELA CINTIA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 56, "nombre": "ARRIAGA AGUILAR LAZARO", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 57, "nombre": "BARBOZA GUEVARA SUSANA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 58, "nombre": "BARDALES SABOYA ROXANA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 59, "nombre": "BECERRA LEON LINO", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 60, "nombre": "BERMUDEZ GAMEZ ANGELA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 61, "nombre": "CALDERON CASTRO ROSALINA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 62, "nombre": "CASTAGNE RISCO CARMEN MILAGROS", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 63, "nombre": "CASTILLO ENCARNACION MARIA DILA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 64, "nombre": "CAVERO VELIZ ESTHER VANA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 65, "nombre": "CENTENO SACCACO LORENA PAOLA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 66, "nombre": "CIERTO CELIS ELIAS", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 67, "nombre": "CORDOVA CORDOVA EDGAR", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 68, "nombre": "CORDOVA JARAMILLO DIEGO", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 69, "nombre": "CORDOVA JARAMILLO ELKY NOE", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 70, "nombre": "CUBAS DIAZ DIONILA", "localidad": "SHAPAJA", "distrito": "UCHIZA"}, 
+{"item": 71, "nombre": "CULQUI SANGAMA ERIKA MAGALY", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 72, "nombre": "DAVILA AGUIRRE NICIDA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 73, "nombre": "DEL AGUILA ROMERO PATTY LIZETH", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 74, "nombre": "DOMINGUEZ VEGA DORINDA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 75, "nombre": "ENCARNACION MARTEL MARUJA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 76, "nombre": "EULOGIO HURTADO YUMAIRA JHAKELYN", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 77, "nombre": "FERNANDEZ FERNANDEZ FIORELA ALHELY", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 78, "nombre": "FERNANDEZ SANCHEZ CARMELA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 79, "nombre": "GALLEGOS QUISPE FELICIANA NARCISA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 80, "nombre": "GARCIA HEREDIA PATRICIA ESTHAR", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 81, "nombre": "GOMEZ QUIROZ TERESA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 82, "nombre": "GOMEZ VELA ELVA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 83, "nombre": "GONZALES GARCIA REBECA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 84, "nombre": "GONZALES HERRERA FERMIN", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 85, "nombre": "GRANDA VALDEZ HJEYDI", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 86, "nombre": "GUEVARA CENTURION LUZ MARINA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 87, "nombre": "GUTIERREZ BERRIOS JOSE LUIS", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 88, "nombre": "HILARIO DIONICIO LUZ MERY", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 89, "nombre": "HUAMAN CANCIO YESSALI", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 90, "nombre": "HUAMAN SOBERON CHEILA ROSIO", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 91, "nombre": "HUARANCCA IZQUIERDO ELSIE LIZ", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 92, "nombre": "HUARINGA QUISPE DORIS ROSALDINA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 93, "nombre": "HURTADO CUBA GRACE RENEE", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 94, "nombre": "HURTADO CUBA GRILDA JOELY", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 95, "nombre": "ISIDRO PEREZ ABIGAIL EINICE", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 96, "nombre": "ISIDRO PEREZ AMELIA ATALIA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 97, "nombre": "ISIDRO PEREZ ELIAS ENOC", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 98, "nombre": "IZQUIERDO CASTILLO MARIA LUZ", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 99, "nombre": "JARA IZQUIERDO ELICA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 100, "nombre": "JARA YZQUIERDO MARTHA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 101, "nombre": "LEON NEYRA VICTOR", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 102, "nombre": "LEON RAMIREZ GREYDI NICOL", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 103, "nombre": "LEON RAMIREZ JHORVAN", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 104, "nombre": "MAHUA HUAYTA BETHY", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 105, "nombre": "MARTEL RENGIFO YULIANA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 106, "nombre": "MEJIA FERNANDEZ DORIS", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 107, "nombre": "MEJIA OLIVERA ROSITA ANACELY", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 108, "nombre": "MENDOZA GOMEZ JUAN", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 109, "nombre": "MEZ GALLEGOS MAYRA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 110, "nombre": "MEZA GALLEGOS PAOLA BEATRIZ", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 111, "nombre": "MEZA ROJAS BELEN", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 112, "nombre": "MOLOCHO QUISPE FILITA MABELY", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 113, "nombre": "MONTEJO VASQUEZ ERIKA GABRIELA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 114, "nombre": "MOSCOSO CALDERON GIOVANNA VICTORIA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 115, "nombre": "MOSCOSO SOTO BACILIO", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 116, "nombre": "MURAYARI TAMANI DANIELA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 117, "nombre": "NAVARRO TAPULLIMA GHIAN KELVIN", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 118, "nombre": "NORIEGA GARCIA MARIA REGINA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 119, "nombre": "NORIEGA LLAGAS KAREN ISABEL", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 120, "nombre": "OLANO ECHEVARRIA SHEYLY", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 121, "nombre": "OLAZABAL PALACIOS JESUS ARCENIO", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 122, "nombre": "OLIVERA DELGADO MARIO", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 123, "nombre": "ORREGO HUAMAN LUZ MARIA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 124, "nombre": "PANDURO PANDURO WEIDER", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 125, "nombre": "PARDO CORREA ESMERALDA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 126, "nombre": "PEÑA PEÑA ANGELICA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 127, "nombre": "PEÑA PEÑA MARIA ISABEL", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 128, "nombre": "PEREZ MATOS AMARILDO GAUDENCIO", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 129, "nombre": "PINEDO AREVALO GILMER", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 130, "nombre": "POLO BERMUDEZ ARACELY", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 131, "nombre": "PONCE CARMEN FRANCISCO", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 132, "nombre": "QUINCHUYA CASTRO NAYDELY YAKORY", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 133, "nombre": "QUINCHUYA IZQUIERDO ELENY KATERINE", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 134, "nombre": "QUINCHUYA ROMERO BRIGITH", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 135, "nombre": "QUINTOS COTRINA HERMILIA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 136, "nombre": "QUIROZ PUENTE SADITH NOEMI", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 137, "nombre": "RAMIREZ SANGAMA JHANY", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 138, "nombre": "RAMOS MENOR AYDE", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 139, "nombre": "RAMOS MENOR LUZ NERY", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 140, "nombre": "RODRIGUEZ SABOYA FAVIOLA", "localidad": "SHAPAJA", "distrito": "UCHIZA"}, 
+{"item": 141, "nombre": "RODRIGUEZ VIGIL CELINA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 142, "nombre": "ROMAN RAMOS IRIS JHOANA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 143, "nombre": "RUEDA JUMPA JAREX ARACELI", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 144, "nombre": "RUIZ CORONEL ROSA EDITH", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 145, "nombre": "RUIZ JIMENEZ JULIA MELINA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 146, "nombre": "RUIZ TANCHIVA DAVID", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 147, "nombre": "RUIZ VEGA EMILIA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 148, "nombre": "SAAVEDRA ROQUE RUTH MARIA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 149, "nombre": "SACCACO BALDARRAGO HONORATA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 150, "nombre": "SAJAMI GONZALES NECY LLOYLI", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 151, "nombre": "SANCHEZ MEZA NILIS SANTIAGO", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 152, "nombre": "SANCHEZ SANCHEZ BELGICA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 153, "nombre": "SANGAMA OSTOS ROSMERITH", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 154, "nombre": "SEBASTIAN ENCARNACION LORENZA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 155, "nombre": "SERNA RAMOS MEDALID", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 156, "nombre": "TAPULIMA DAVILA ANGELA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 157, "nombre": "TAPULLIMA CORTEZ DARA LICSSA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 158, "nombre": "TAPULLIMA DAVILA MARISELA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 159, "nombre": "TAPULLIMA DAVILA ROSA MARIA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 160, "nombre": "TORRES ASPIROS MAXIMO", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 161, "nombre": "TORRES JUANAN ROCIA KATHERIN", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 162, "nombre": "TORRES PISCO MARITZA LLULIANA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 163, "nombre": "TUANAMA ISUIZA ENEDITH", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 164, "nombre": "TUANAMA UTIA BARBARA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 165, "nombre": "VALDEZ ILATOMA DELICIA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 166, "nombre": "VARGAS HUANCAR JUAN RAMON", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 167, "nombre": "VARGAS SILVA SANTOS", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 168, "nombre": "VASQUEZ VARGAS NELSON", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 169, "nombre": "VELASCO GOMEZ KARLA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 170, "nombre": "VELASQUE SAYAN MEDALID DEL PILAR", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 171, "nombre": "VELASQUEZ SAYAN YENIFER JHANIRA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 172, "nombre": "VELASQUEZ VELASQUE JADE LESVITH", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 173, "nombre": "VERA CURENAMBE JHERALDO YONAR", "localidad": "SHAPAJA", "distrito": "UCHIZA"},
+{"item": 174, "nombre": "VILLACAQUE UCEDA LUZ ANITA", "localidad": "SHAPAJA", "distrito": "UCHIZA"},];
+    </script>
+
+    <div class="max-w-xl mx-auto w-full bg-white rounded-3xl shadow-xl p-6 md:p-8 border border-slate-100">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-slate-900">Telecentro Shapaja</h1>
+            <p class="text-slate-500 mt-2 text-sm">Escribe un nombre o apellido para buscar</p>
+        </div>
+
+        <div class="space-y-4">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Ej. Perez o Juan" 
+                class="w-full p-4 border border-slate-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
+                oninput="checkPadron()"
+            >
+        </div>
+
+        <div id="resultsContainer" class="mt-6 hidden">
+            <div id="resultsList" class="space-y-3 results-scroll max-h-[400px] overflow-y-auto pr-2">
+                <!-- Los resultados aparecerán aquí -->
+            </div>
+            
+            <div id="footerMsg" class="mt-6 p-4 rounded-xl bg-blue-50 border border-blue-100 text-sm text-blue-800 text-center">
+                ¿No encontraste lo que buscabas? Acércate al Telecentro Shapaja con tu DNI para asistencia personalizada.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkPadron() {
+            const input = document.getElementById('searchInput').value.toUpperCase().trim();
+            const container = document.getElementById('resultsContainer');
+            const list = document.getElementById('resultsList');
+            
+            if (input.length < 2) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            // Filtramos los resultados que coincidan
+            const filtered = PADRON_DATA.filter(person => 
+                person.nombre.includes(input)
+            );
+
+            list.innerHTML = '';
+            
+            if (filtered.length > 0) {
+                filtered.forEach(person => {
+                    const div = document.createElement('div');
+                    div.className = "p-4 bg-white border border-slate-200 rounded-xl hover:border-blue-300 transition-all shadow-sm";
+                    div.innerHTML = `
+                        <div class="font-bold text-slate-800">${person.nombre}</div>
+                        <div class="text-xs text-slate-500 mt-1 uppercase tracking-wider">${person.localidad} - ${person.distrito}</div>
+                        <div class="mt-2 text-emerald-600 text-xs font-semibold">✅ Encontrado en el padrón</div>
+                    `;
+                    list.appendChild(div);
+                });
+            } else {
+                list.innerHTML = `<div class="p-4 text-center text-slate-500">No se encontraron resultados para "${input}"</div>`;
+            }
+
+            container.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
